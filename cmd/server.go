@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/Erenalp06/otel-go/internal/config"
 	"github.com/Erenalp06/otel-go/internal/controllers"
 	"github.com/Erenalp06/otel-go/internal/repository"
 	"github.com/Erenalp06/otel-go/internal/services"
@@ -15,16 +16,9 @@ import (
 
 func InitializeApp(app *fiber.App) {
 
-	config := &database.Config{
-		Host:     "localhost",
-		Port:     "5432",
-		Password: "postgres",
-		User:     "postgres",
-		SSLMode:  "disable",
-		DBName:   "otel_go_db",
-	}
+	config.InitTracer()
 
-	db, err := database.NewConnection(config)
+	db, err := database.NewConnection()
 	if err != nil {
 		log.Fatal("Could not load the database")
 	}
@@ -35,9 +29,7 @@ func InitializeApp(app *fiber.App) {
 	}
 
 	userRepository := repository.NewRepository(db)
-
 	userService := services.NewUserService(userRepository)
-
 	userController := controllers.NewUserController(userService)
 
 	app.Use(cors.New(cors.Config{
@@ -45,7 +37,9 @@ func InitializeApp(app *fiber.App) {
 		AllowOrigins:     "*",
 	}))
 
+	//app.Use(adaptor.HTTPMiddleware(otelhttp.NewMiddleware("server")))
 	routes.SetupRoutes(app, userController)
 
 	app.Listen(":8085")
+
 }
