@@ -5,7 +5,7 @@ DOCKER_COMPOSE_FILE=docker-compose.yml
 .PHONY: run
 run: 
 	@echo "Starting services..."
-	docker-compose -f $(DOCKER_COMPOSE_FILE) up --build
+	docker-compose -f $(DOCKER_COMPOSE_FILE) up --build -d
 
 .PHONY: clean
 clean:

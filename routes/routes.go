@@ -15,4 +15,5 @@ func SetupRoutes(app *fiber.App, userController *controllers.UserController) {
 	users.Get("/:id", userController.GetUserById)
 	users.Put("/:id", userController.UpdateUser)
 	users.Delete("/:id", userController.DeleteUser)
+	api.Get("/fetch-data", userController.ExternalAPI)
 }
