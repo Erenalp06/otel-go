@@ -14,7 +14,8 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=postgres
-      - OTEL_ADDRESS=192.168.1.12:4318
+      - OTEL_ADDRESS=10.150.238.177:4318
+      - SERVICE_NAME=go-api
 
   db:
     image: postgres:13

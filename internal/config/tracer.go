@@ -27,7 +27,7 @@ func InitTracer() *sdktrace.TracerProvider {
 		sdktrace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceNameKey.String("go-telemetry-api"),
+				semconv.ServiceNameKey.String(os.Getenv("SERVICE_NAME")),
 			)),
 	)
 	otel.SetTracerProvider(tp)
