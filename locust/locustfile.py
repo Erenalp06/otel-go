@@ -8,6 +8,10 @@ class UserBehavior(HttpUser):
         self.client.get("/api/v1/users")
 
     @task(1)
+    def get_all_users(self):
+        self.client.get("/api/fetch-data")
+
+    @task(1)
     def create_user(self):
         user_data = {
             "name": "John Doe",
@@ -34,6 +38,3 @@ class UserBehavior(HttpUser):
         }
         self.client.put("/api/v1/users/1", json=user_data)
 
-    @task(1)
-    def delete_user(self):
-        self.client.delete("/api/v1/users/1")
